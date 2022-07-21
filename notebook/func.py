@@ -2,9 +2,11 @@ global pd
 import pandas as pd
 
 def read_ss_table(path):
-    pd.set_option('display.max_columns',None)
-    pd.set_option('display.max_rows',None)
-    pd.set_option('display.width', 150)
+    pd.set_option('display.max_rows', None)
+    pd.set_option('display.max_columns', None)
+    pd.set_option('display.width', None)
+    pd.set_option('display.max_colwidth', None)
+
     df = pd.read_excel(path,header=1)
     need_columns = ['상품주문번호','주문번호','배송방법(구매자 요청)','배송방법','택배사','송장번호','발송일','구매자명','수취인명','상품명','상품종류','옵션정보','수량','옵션가격','상품가격','상품별 총 주문금액','배송지','구매자연락처','배송메세지','정산예정금액','수취인연락처1','배송속성','배송희망일','결제일','구매자ID','우편번호']
     columns = df.columns.to_list()
@@ -39,7 +41,8 @@ def col_rename(df):
 def numbers_change(df):
     
     def numbers(x):
-        if x.startswith(1) == True:
+        x = str(x)
+        if x.startswith('1') == True:
             return '0' + str(x)[:2] + '-' + str(x)[2:6] + '-' + str(x)[6:]
         else: 
             return '0' + str(x)[:3] + '-' + str(x)[3:7] + '-' + str(x)[7:]
@@ -47,6 +50,13 @@ def numbers_change(df):
     df['구매자연락처'] = df['구매자연락처'].apply(lambda x : numbers(x))
     df['수취인연락처1'] = df['수취인연락처1'].apply(lambda x : numbers(x))
     return df
+
+
+
+
+
+
+
 
 
 def strip_count(df):
@@ -152,7 +162,17 @@ def product_change(df):
             
     return df
         
-        
+
+def E_mail_disguise(df):
+    import numpy as np
+    for index_, email in enumerate(df['구매자ID'].to_list()):
+        if type(email) == float:
+            df.loc[index_,'구매자ID'] = '없음'
+        else:
+            email = email.split('@')[0]
+            id = email[:2] + ('*' * len(email[2:]))
+            df.loc[index_,'구매자ID'] = id
+    return df        
 
 
 
@@ -162,6 +182,7 @@ def total_change(df):
     df = strip_count(df)
     df = options(df)
     df = product_change(df)
+    df = E_mail_disguise(df)
     return df
 
 
