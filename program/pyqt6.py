@@ -3,6 +3,7 @@ from PyQt6.QtWidgets import *
 from PyQt6 import uic
 import os
 
+
 UI_class = uic.loadUiType('uniform.ui')[0]
 
 class main_window(QMainWindow, UI_class):
@@ -35,8 +36,7 @@ class main_window(QMainWindow, UI_class):
         
     
     def Format_functions(self):
-        print(iwfname[0])
-        print(nvfname[0])
+        import func
         
         
     
