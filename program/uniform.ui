@@ -182,8 +182,8 @@
   <widget class="QLabel" name="original_label">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>250</y>
+     <x>10</x>
+     <y>240</y>
      <width>211</width>
      <height>20</height>
     </rect>
@@ -201,8 +201,27 @@
   <widget class="QLabel" name="honest_label">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>290</y>
+     <x>10</x>
+     <y>260</y>
+     <width>211</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="layoutDirection">
+    <enum>Qt::LeftToRight</enum>
+   </property>
+   <property name="text">
+    <string>TextLabel</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="curation_label">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>280</y>
      <width>211</width>
      <height>20</height>
     </rect>

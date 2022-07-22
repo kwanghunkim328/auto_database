@@ -16,6 +16,7 @@ class main_window(QMainWindow, UI_class):
         self.Naver_file.setText('스마트스토어')
         self.original_label.setText('오리지널 저장 경로')
         self.honest_label.setText('어니스트 저장 경로')
+        self.curation_label.setText('큐레이션 저장 경로')
     
         self.ImWeb_file_btn.clicked.connect(self.imweb_FileLoad)
         self.Naver_file_btn.clicked.connect(self.naver_FileLoad)  
@@ -37,6 +38,10 @@ class main_window(QMainWindow, UI_class):
     
     def Format_functions(self):
         import func
+        # print(iwfname[0])
+        # print(nvfname[0])
+        
+        
         
         
     
