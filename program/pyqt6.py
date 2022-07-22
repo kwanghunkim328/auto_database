@@ -5,7 +5,9 @@ import os
 from PyQt6.QtCore import QTimer
 
 
-UI_class = uic.loadUiType('uniform.ui')[0]
+## python실행파일 디렉토리
+BASE_DIR = os.path.dirname(os.path.abspath(__file__)) 
+UI_class = uic.loadUiType(BASE_DIR + r'\uniform.ui')[0]
 
 class main_window(QMainWindow, UI_class):
     def __init__(self):
