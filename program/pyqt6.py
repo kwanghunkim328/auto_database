@@ -25,7 +25,7 @@ class main_window(QMainWindow, UI_class):
         self.progressBar = QProgressBar(self)
         self.progressBar.setGeometry(60,170,118,23)
         self.progressBar.setMaximum(250)
-        self.progressBar.setValue(50)
+        self.progressBar.setValue(0)
         
 
         
@@ -45,8 +45,8 @@ class main_window(QMainWindow, UI_class):
     
     def Format_functions(self):
         import func
-        global original_df, honest_df, curation_df
-        original_df, honest_df, curation_df = func.IMWEB_total(iwfname[0])
+        global original_df, honest_df, curation_df, total
+        original_df, honest_df, curation_df, total = func.IMWEB_total(iwfname[0])
         timer = QTimer(self)
         timer.timeout.connect(self.Increase_Stop)
         timer.start()
@@ -61,12 +61,13 @@ class main_window(QMainWindow, UI_class):
         if not os.path.exists(f'./{date}'):
             os.mkdir(f'./{date}')
             
-        original_df.to_excel(f'./{date}/original_df.xlsx',encoding='utf-8-sig',index=0)
+        original_df.to_excel(f'./{date}/오리지널라인.xlsx',encoding='utf-8-sig',index=0)
         
-        honest_df.to_excel(f'./{date}/honest_df.xlsx',encoding='utf-8-sig',index=0)
+        honest_df.to_excel(f'./{date}/어니스트.xlsx',encoding='utf-8-sig',index=0)
         
-        curation_df.to_excel(f'./{date}/curation_df.xlsx',encoding='utf-8-sig',index=0)
+        curation_df.to_excel(f'./{date}/큐레이션.xlsx',encoding='utf-8-sig',index=0)
         
+        total.to_excel(f'./{date}/총합(어니스트제외).xlsx',encoding='utf-8-sig',index=0)
         cwd = os.getcwd()
         self.Save_label.setText(f'{cwd}/{date}')
 

@@ -548,6 +548,95 @@ def honest_order_count(df):
 
 
 
+def curation_format(df):
+    import pandas as pd
+    result_df = pd.DataFrame(columns=df.columns)
+    for index_, Temp in enumerate(df['Temp'].to_list()):
+        
+        if df.loc[index_,'Temp'] == '1일 1식':
+            count = '(10팩)'
+        elif df.loc[index_,'Temp'] == '1일 2식':
+            count = '(20팩)'
+            
+        if df.loc[index_,'temp2'] == '탄수화물100g' and df.loc[index_,'temp3'] == '단백질100g' :
+            main = pd.DataFrame(df.loc[index_, [x for x in list(df.columns)]]).T
+            result_df = pd.concat([result_df,main],axis=0, ignore_index = True)
+        
+        elif df.loc[index_,'temp2'] == '탄수화물100g' and df.loc[index_,'temp3'] == '단백질150g' :
+            main = pd.DataFrame(df.loc[index_, [x for x in list(df.columns)]]).T
+            append = pd.DataFrame(df.loc[index_, [x for x in list(df.columns)]]).T
+            append.loc[index_,'옵션정보'] = f'단백질 추가 : 단백질 50g추가{count}'
+            append_df = pd.concat([append,main],ignore_index = True,axis=0)
+            result_df = pd.concat([result_df,append_df],axis=0, ignore_index = True)
+        
+            
+        elif df.loc[index_,'temp2'] == '탄수화물100g' and df.loc[index_,'temp3'] == '단백질200g' :
+            main = pd.DataFrame(df.loc[index_, [x for x in list(df.columns)]]).T
+            append = pd.DataFrame(df.loc[index_, [x for x in list(df.columns)]]).T
+            append.loc[index_,'옵션정보'] = f'단백질 추가 : 단백질 100g추가{count}'
+            append_df = pd.concat([append,main],ignore_index = True,axis=0)
+            result_df = pd.concat([result_df,append_df],axis=0, ignore_index = True)
+        
+            
+            
+        elif df.loc[index_,'temp2'] == '탄수화물150g' and df.loc[index_,'temp3'] == '단백질100g' :
+            main = pd.DataFrame(df.loc[index_, [x for x in list(df.columns)]]).T
+            append = pd.DataFrame(df.loc[index_, [x for x in list(df.columns)]]).T
+            append.loc[index_,'옵션정보'] = f'탄수화물 추가 : 탄수화물 50g추가{count}'
+            append_df = pd.concat([append,main],ignore_index = True,axis=0)
+            result_df = pd.concat([result_df,append_df],axis=0, ignore_index = True)
+            
+        elif df.loc[index_,'temp2'] == '탄수화물150g' and df.loc[index_,'temp3'] == '단백질150g' :
+            main = pd.DataFrame(df.loc[index_, [x for x in list(df.columns)]]).T
+            fst = pd.DataFrame(df.loc[index_, [x for x in list(df.columns)]]).T
+            fst.loc[index_,'옵션정보'] = f'탄수화물 추가 : 탄수화물 50g추가{count}'
+            scd = pd.DataFrame(df.loc[index_, [x for x in list(df.columns)]]).T
+            scd.loc[index_,'옵션정보'] = f'단백질 추가 : 단백질 50g추가{count}'
+            append_df = pd.concat([fst,scd,main],ignore_index = True,axis=0)
+            result_df = pd.concat([result_df,append_df],axis=0, ignore_index = True)
+            
+        elif df.loc[index_,'temp2'] == '탄수화물150g' and df.loc[index_,'temp3'] == '단백질200g' :
+            main = pd.DataFrame(df.loc[index_, [x for x in list(df.columns)]]).T
+            fst = pd.DataFrame(df.loc[index_, [x for x in list(df.columns)]]).T
+            fst.loc[index_,'옵션정보'] = f'탄수화물 추가 : 탄수화물 50g추가{count}'
+            scd = pd.DataFrame(df.loc[index_, [x for x in list(df.columns)]]).T
+            scd.loc[index_,'옵션정보'] = f'단백질 추가 : 단백질 100g추가{count}'
+            append_df = pd.concat([fst,scd,main],ignore_index = True,axis=0)
+            result_df = pd.concat([result_df,append_df],axis=0, ignore_index = True)
+            
+            
+            
+        elif df.loc[index_,'temp2'] == '탄수화물200g' and df.loc[index_,'temp3'] == '단백질100g' :
+            main = pd.DataFrame(df.loc[index_, [x for x in list(df.columns)]]).T
+            append = pd.DataFrame(df.loc[index_, [x for x in list(df.columns)]]).T
+            append_df.loc[index_,'옵션정보'] = f'탄수화물 추가 : 탄수화물 100g추가{count}'
+            append_df = pd.concat([fst,scd,main],ignore_index = True,axis=0)
+            result_df = pd.concat([result_df,append_df],axis=0, ignore_index = True)
+        
+        elif df.loc[index_,'temp2'] == '탄수화물200g' and df.loc[index_,'temp3'] == '단백질150g' :
+            main = pd.DataFrame(df.loc[index_, [x for x in list(df.columns)]]).T
+            fst = pd.DataFrame(df.loc[index_, [x for x in list(df.columns)]]).T
+            fst.loc[index_,'옵션정보'] = f'탄수화물 추가 : 탄수화물 100g추가{count}'
+            scd = pd.DataFrame(df.loc[index_, [x for x in list(df.columns)]]).T
+            scd.loc[index_,'옵션정보'] = f'단백질 추가 : 단백질 50g추가{count}'
+            append_df = pd.concat([fst,scd,main],ignore_index = True,axis=0)
+            result_df = pd.concat([result_df,append_df],axis=0, ignore_index = True)
+        
+        elif df.loc[index_,'temp2'] == '탄수화물200g' and df.loc[index_,'temp3'] == '단백질200g' :
+            main = pd.DataFrame(df.loc[index_, [x for x in list(df.columns)]]).T
+            fst = pd.DataFrame(df.loc[index_, [x for x in list(df.columns)]]).T
+            fst.loc[index_,'옵션정보'] = f'탄수화물 추가 : 탄수화물 100g추가{count}'
+            scd = pd.DataFrame(df.loc[index_, [x for x in list(df.columns)]]).T
+            scd.loc[index_,'옵션정보'] = f'단백질 추가 : 단백질 100g추가{count}'
+            append_df = pd.concat([fst,scd,main],ignore_index = True,axis=0)
+            result_df = pd.concat([result_df,append_df],axis=0, ignore_index = True)
+    
+    return result_df
+                    
+
+def curation_strip(df):
+    return df.drop(['Temp','temp2','temp3'],axis=1)
+
 
 
 
@@ -614,4 +703,12 @@ def IMWEB_total(df_path:str):
     original_df = original_product_change(original_df)
     original_df = options(original_df)
     
-    return original_df, honest_df, curation_df
+    ### curation
+    curation_df = curation_format(curation_df)
+    curation_df = curation_strip(curation_df)
+    curation_df = options(curation_df)
+    curation_df = original_product_change(curation_df)
+    total = pd.concat([curation_df,original_df],axis=0, ignore_index=True)
+    
+    
+    return original_df, honest_df, curation_df, total
