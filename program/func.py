@@ -580,4 +580,38 @@ def honest_order_count(df):
   ####     ####     ####     ####     ####     ####     ####     ####     ####     ####   
  ##  ##   ##  ##   ##  ##   ##  ##   ##  ##   ##  ##   ##  ##   ##  ##   ##  ##   ##  ##  
                                                                                           
-                                                                                          
+
+def IMWEB_total(df_path:str):
+    """
+
+    Args:
+        df_path (DataFrame): ImWeb DataFrame path
+    """
+    df = pd.read_excel(df_path)
+    # Main
+    df = col_rename(df)
+    df = numbers_change(df)
+    df = strip_count(df)
+    # For split
+    df = curation_diet_split(df)
+    df = curation_unique_split(df)
+    df = curation_diet_count(df)
+    df = curation_total_option_split(df)
+    # Delivery
+    df = delivery_split(df)
+    # Email
+    df = E_mail_disguise(df)
+
+    # SPLIT 3 DF
+    curation_df, honest_df,original_df = DF_SPLIT(df)
+
+
+    ### HONEST
+    honest_df = honest_order_count(honest_df)
+    honest_df = options(honest_df)
+
+    ### Original
+    original_df = original_product_change(original_df)
+    original_df = options(original_df)
+    
+    return original_df, honest_df, curation_df

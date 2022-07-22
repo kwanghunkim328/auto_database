@@ -2,6 +2,7 @@ import sys
 from PyQt6.QtWidgets import *
 from PyQt6 import uic
 import os
+from PyQt6.QtCore import QTimer
 
 
 UI_class = uic.loadUiType('uniform.ui')[0]
@@ -14,13 +15,19 @@ class main_window(QMainWindow, UI_class):
     
         self.ImWeb_file.setText('자사몰')
         self.Naver_file.setText('스마트스토어')
-        self.original_label.setText('오리지널 저장 경로')
-        self.honest_label.setText('어니스트 저장 경로')
-        self.curation_label.setText('큐레이션 저장 경로')
+        self.Save_label.setText('저장 경로')
     
         self.ImWeb_file_btn.clicked.connect(self.imweb_FileLoad)
         self.Naver_file_btn.clicked.connect(self.naver_FileLoad)  
         self.Format_func_btn.clicked.connect(self.Format_functions)
+        self.Save_to_btn.clicked.connect(self.Save_functions)
+        
+        self.progressBar = QProgressBar(self)
+        self.progressBar.setGeometry(60,170,118,23)
+        self.progressBar.setMaximum(250)
+        self.progressBar.setValue(50)
+        
+
         
     def imweb_FileLoad(self):
         global iwfname
@@ -38,14 +45,39 @@ class main_window(QMainWindow, UI_class):
     
     def Format_functions(self):
         import func
-        # print(iwfname[0])
-        # print(nvfname[0])
+        global original_df, honest_df, curation_df
+        original_df, honest_df, curation_df = func.IMWEB_total(iwfname[0])
+        timer = QTimer(self)
+        timer.timeout.connect(self.Increase_Stop)
+        timer.start()
         
         
-        
-        
-    
+    def Save_functions(self):
             
+        import datetime as dt
+        today = dt.datetime.today()
+        date = today.strftime('%Y%m%d')
+        import os
+        if not os.path.exists(f'./{date}'):
+            os.mkdir(f'./{date}')
+            
+        original_df.to_excel(f'./{date}/original_df.xlsx',encoding='utf-8-sig',index=0)
+        
+        honest_df.to_excel(f'./{date}/honest_df.xlsx',encoding='utf-8-sig',index=0)
+        
+        curation_df.to_excel(f'./{date}/curation_df.xlsx',encoding='utf-8-sig',index=0)
+        
+        cwd = os.getcwd()
+        self.Save_label.setText(f'{cwd}/{date}')
+
+        
+
+        
+    def Increase_Stop(self):
+        self.progressBar.setValue(self.progressBar.value() + 1)
+        
+        
+        
         
 if __name__ == '__main__':
     app = QApplication(sys.argv)
