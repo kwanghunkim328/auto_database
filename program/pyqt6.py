@@ -6,8 +6,9 @@ from PyQt6.QtCore import QTimer
 
 
 ## python실행파일 디렉토리
-BASE_DIR = os.path.dirname(os.path.abspath(__file__)) 
-UI_class = uic.loadUiType(BASE_DIR + r'\uniform.ui')[0]
+# BASE_DIR = os.path.dirname(os.path.abspath(__file__)) 
+# UI_class = uic.loadUiType(BASE_DIR + r'\uniform.ui')[0]
+UI_class = uic.loadUiType('./uniform.ui')[0]
 
 class main_window(QMainWindow, UI_class):
     def __init__(self):
@@ -70,7 +71,9 @@ class main_window(QMainWindow, UI_class):
         curation_df.to_excel(f'./{date}/큐레이션.xlsx',encoding='utf-8-sig',index=0)
         
         total.to_excel(f'./{date}/총합(어니스트제외).xlsx',encoding='utf-8-sig',index=0)
+        
         cwd = os.getcwd()
+        
         self.Save_label.setText(f'{cwd}/{date}')
 
         

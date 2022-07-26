@@ -12,4 +12,8 @@
 #### GUI
 
 - PyQt6 
-- UI : QtDesigner 
+- UI : QtDesigner
+
+#### GUI > SERVER (20220726~)
+
+- All Functions will make new. 
